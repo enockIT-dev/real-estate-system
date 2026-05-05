@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Favorites - Real Estate System</title>
+    <style>
+        /* Similar to properties.html */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
+        header { background: #2c3e50; color: white; padding: 1rem 0; }
+        nav { background: #34495e; padding: 0; }
+        nav ul { list-style: none; display: flex; flex-wrap: wrap; justify-content: center; }
+        nav li { flex: 1 1 200px; text-align: center; }
+        nav a { display: block; color: white; padding: 1rem; text-decoration: none; transition: background 0.3s; }
+        nav a:hover, nav a.active { background: #2c3e50; }
+        main { padding: 2rem; max-width: 1200px; margin: auto; }
+        .favorites-empty { text-align: center; padding: 4rem; background: #f8f9fa; border-radius: 10px; }
+        .properties-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 2rem; }
+        .property-card { background: white; border-radius: 10px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+        .property-img { height: 200px; background-size: cover; }
+        .property-info { padding: 1.5rem; }
+        .btn { background: #e74c3c; color: white; padding: 0.5rem 1rem; text-decoration: none; border-radius: 5px; display: inline-block; }
+        footer { background: #2c3e50; color: white; text-align: center; padding: 2rem; margin-top: 4rem; }
+    </style>
+</head>
+<body>
+    <header>
+        <h2>🏠 Real Estate System</h2>
+    </header>
+    <nav id="main-nav"><!-- nav --></nav>
+    <main>
+        <h1>My Favorites</h1>
+        <div id="favoritesGrid" class="properties-grid"></div>
+    </main>
+    <footer><!-- footer --></footer>
+    <script>
+        highlightNav();
+        
+        const favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
+        const properties = JSON.parse(localStorage.getItem('properties') || '[]');
+        const favoriteProps = properties.filter(p => favorites.includes(p.id));
+        
+        const grid = document.getElementById('favoritesGrid');
+        if (favoriteProps.length === 0) {
+            grid.innerHTML = '<div class="favorites-empty"><h3>No favorites yet</h3><p>Add properties to your wishlist from the properties page.</p><a href="properties.html" class="btn">Browse Properties</a></div>';
+        } else {
+            grid.innerHTML = favoriteProps.map(p => `
+                <div class="property-card">
+                    <div class="property-img" style="background-image: url('${p.img}')"></div>
+                    <div class="property-info">
+                        <h3>${p.title}</h3>
+                        <p>$${p.price}K - ${p.location}</p>
+                        <a href="property-details.html?id=${p.id}" class="btn">View Details</a>
+                        <a href="#" class="btn" onclick="removeFavorite(${p.id}); return false;" style="background: #95a5a6;">Remove</a>
+                    </div>
+                </div>
+            `).join('');
+        }
+        
+        function removeFavorite(id) {
+            let favoritesList = JSON.parse(localStorage.getItem('favorites') || '[]');
+            favoritesList = favoritesList.filter(f => f !== id);
+            localStorage.setItem('favorites', JSON.stringify(favoritesList));
+            location.reload();
+        }
+    </script>
+</body>
+</html>
+

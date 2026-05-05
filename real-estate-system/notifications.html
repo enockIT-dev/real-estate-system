@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notifications - Real Estate System</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
+        header { background: #2c3e50; color: white; padding: 1rem 0; }
+        nav { background: #34495e; padding: 0; }
+        nav ul { list-style: none; display: flex; flex-wrap: wrap; justify-content: center; }
+        nav li { flex: 1 1 200px; text-align: center; }
+        nav a { display: block; color: white; padding: 1rem; text-decoration: none; transition: background 0.3s; }
+        nav a:hover, nav a.active { background: #2c3e50; }
+        main { padding: 2rem; max-width: 800px; margin: auto; }
+        .notification { background: white; padding: 1.5rem; margin-bottom: 1rem; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); display: flex; align-items: center; }
+        .notification.unread { border-left: 5px solid #3498db; background: #f0f8ff; }
+        .notification-icon { font-size: 2rem; margin-right: 1rem; }
+        .notification.unread .notification-icon { color: #3498db; }
+        .notification-content h4 { margin-bottom: 0.5rem; }
+        .notification-time { color: #666; font-size: 0.9rem; }
+        .mark-read { background: none; border: none; color: #3498db; cursor: pointer; font-size: 0.9rem; }
+        .empty-notifs { text-align: center; padding: 4rem; background: #f8f9fa; border-radius: 10px; }
+        footer { background: #2c3e50; color: white; text-align: center; padding: 2rem; margin-top: 4rem; }
+    </style>
+</head>
+<body>
+    <header>
+        <h2>🏠 Real Estate System</h2>
+    </header>
+    <nav id="main-nav"><!-- nav --></nav>
+    <main>
+        <h1>Notifications</h1>
+        <div id="notificationsList"></div>
+    </main>
+    <footer><!-- footer --></footer>
+    <script>
+        highlightNav();
+        
+        // Mock notifications
+        const notifications = [
+            {id:1, title:'New booking confirmed', message:'Your viewing for Property 5 is confirmed.', time:'2 mins ago', read: false},
+            {id:2, title:'Price drop', message:'Property 3 price reduced by 10%', time:'1 hour ago', read: true},
+            {id:3, title:'New message', message:'Agent replied to your inquiry.', time:'3 hours ago', read: false},
+        ];
+        
+        function renderNotifications() {
+            const list = document.getElementById('notificationsList');
+            if (notifications.length === 0) {
+                list.innerHTML = '<div class="empty-notifs"><h3>No notifications</h3></div>';
+            } else {
+                list.innerHTML = notifications.map(n => `
+                    <div class="notification ${n.read ? '' : 'unread'}">
+                        <div class="notification-icon">🔔</div>
+                        <div class="notification-content">
+                            <h4>${n.title}</h4>
+                            <p>${n.message}</p>
+                            <div class="notification-time">${n.time}</div>
+                        </div>
+                        ${!n.read ? `<button class="mark-read" onclick="markRead(${n.id})">Mark as read</button>` : ''}
+                    </div>
+                `).join('');
+            }
+        }
+        
+        function markRead(id) {
+            const notif = notifications.find(n => n.id === id);
+            notif.read = true;
+            renderNotifications();
+        }
+        
+        renderNotifications();
+    </script>
+</body>
+</html>
+

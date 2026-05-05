@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Logout - Real Estate System</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; display: flex; flex-direction: column; min-height: 100vh; }
+        header { background: #2c3e50; color: white; padding: 1rem 0; }
+        nav { background: #34495e; padding: 0; }
+        nav ul { list-style: none; display: flex; flex-wrap: wrap; justify-content: center; }
+        nav li { flex: 1 1 200px; text-align: center; }
+        nav a { display: block; color: white; padding: 1rem; text-decoration: none; transition: background 0.3s; }
+        nav a:hover, nav a.active { background: #2c3e50; }
+        main { flex: 1; display: flex; align-items: center; justify-content: center; text-align: center; padding: 2rem; }
+        .logout-container { background: white; padding: 4rem 3rem; border-radius: 20px; box-shadow: 0 20px 40px rgba(0,0,0,0.1); max-width: 500px; }
+        .logout-icon { font-size: 5rem; color: #3498db; margin-bottom: 2rem; }
+        h1 { color: #2c3e50; margin-bottom: 1rem; }
+        .countdown { font-size: 3rem; color: #e74c3c; margin: 1rem 0; font-weight: bold; }
+        .btn { background: #3498db; color: white; padding: 1rem 2rem; text-decoration: none; border-radius: 10px; display: inline-block; margin-top: 1rem; transition: background 0.3s; }
+        .btn:hover { background: #2980b9; }
+        .btn.secondary { background: #95a5a6; }
+        .btn.secondary:hover { background: #7f8c8d; }
+        footer { background: #2c3e50; color: white; text-align: center; padding: 2rem; flex-shrink: 0; }
+    </style>
+</head>
+<body>
+    <header>
+        <h2>🏠 Real Estate System</h2>
+    </header>
+    <nav id="main-nav"><!-- nav --></nav>
+    <main>
+        <div class="logout-container">
+            <div class="logout-icon">👋</div>
+            <h1>You have been logged out</h1>
+            <p>Thank you for using Real Estate System. You will be redirected to home page shortly.</p>
+            <div class="countdown" id="countdown">5</div>
+            <a href="index.html" class="btn">Go to Home</a>
+            <a href="login.html" class="btn secondary">Login Again</a>
+        </div>
+    </main>
+    <footer>
+        <p>&copy; 2024 Real Estate System. All rights reserved.</p>
+    </footer>
+    <script>
+        highlightNav();
+        
+        // Logout cleanup
+        localStorage.removeItem('user');
+        
+        // Countdown redirect
+        let timeLeft = 5;
+        const countdownEl = document.getElementById('countdown');
+        const timer = setInterval(() => {
+            timeLeft--;
+            countdownEl.textContent = timeLeft;
+            if (timeLeft <= 0) {
+                clearInterval(timer);
+                window.location.href = 'index.html';
+            }
+        }, 1000);
+    </script>
+</body>
+</html>
+

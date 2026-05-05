@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Properties - Real Estate System</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
+        header { background: #2c3e50; color: white; padding: 1rem 0; }
+        nav { background: #34495e; padding: 0; }
+        nav ul { list-style: none; display: flex; flex-wrap: wrap; justify-content: center; }
+        nav li { flex: 1 1 200px; text-align: center; }
+        nav a { display: block; color: white; padding: 1rem; text-decoration: none; transition: background 0.3s; }
+        nav a:hover, nav a.active { background: #2c3e50; }
+        main { padding: 2rem; max-width: 1200px; margin: auto; }
+        .search-bar { background: #f8f9fa; padding: 1.5rem; border-radius: 10px; margin-bottom: 2rem; text-align: center; }
+        input[type="text"] { padding: 0.75rem; width: 60%; max-width: 400px; border: 1px solid #ddd; border-radius: 5px; font-size: 1rem; }
+        button { background: #3498db; color: white; padding: 0.75rem 1.5rem; border: none; border-radius: 5px; cursor: pointer; margin-left: 0.5rem; }
+        .properties-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 2rem; }
+        .property-card { background: white; border-radius: 10px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.1); transition: transform 0.3s; }
+        .property-card:hover { transform: translateY(-5px); }
+        .property-img { height: 200px; background-size: cover; background-position: center; }
+        .property-info { padding: 1.5rem; }
+        .property-title { font-size: 1.3rem; margin-bottom: 0.5rem; }
+        .property-price { font-size: 1.5rem; color: #27ae60; font-weight: bold; margin-bottom: 0.5rem; }
+        .btn { background: #3498db; color: white; padding: 0.5rem 1rem; text-decoration: none; border-radius: 5px; display: inline-block; margin-right: 0.5rem; margin-top: 0.5rem; }
+        .btn.fav { background: #f39c12; }
+        footer { background: #2c3e50; color: white; text-align: center; padding: 2rem; margin-top: 4rem; }
+        @media (max-width: 768px) { nav ul { flex-direction: column; } .properties-grid { grid-template-columns: 1fr; } input[type="text"] { width: 80%; } }
+    </style>
+</head>
+<body>
+    <header>
+        <h2>🏠 Real Estate System</h2>
+    </header>
+    <nav id="main-nav">
+        <ul><!-- Same 30 nav links as dashboard --></ul>
+    </nav>
+    <main>
+        <div class="search-bar">
+            <h2>Properties</h2>
+            <p>Find your dream home</p>
+            <input type="text" id="searchInput" placeholder="Search by title, location...">
+            <button onclick="filterProperties()">Search</button>
+            <button onclick="loadProperties()">Clear</button>
+        </div>
+        <div id="propertiesGrid" class="properties-grid"></div>
+    </main>
+    <footer>
+        <p>&copy; 2024 Real Estate System. All rights reserved.</p>
+    </footer>
+    <script>
+        function highlightNav() {/* same */}
+        
+        let allProperties = [];
+        
+        function loadProperties(filtered = []) {
+            allProperties = JSON.parse(localStorage.getItem('properties') || '[]');
+            const props = filtered.length ? filtered : allProperties;
+            const grid = document.getElementById('propertiesGrid');
+            grid.innerHTML = props.map(p => `
+                <div class="property-card">
+                    <div class="property-img" style="background-image: url('${p.img}')"></div>
+                    <div class="property-info">
+                        <div class="property-title">${p.title}</div>
+                        <div class="property-price">$${p.price}K</div>
+                        <p>${p.desc}</p>
+                        <p><strong>Location:</strong> ${p.location}</p>
+                        <a href="property-details.html?id=${p.id}" class="btn">View Details</a>
+                        <a href="#" class="btn fav" onclick="toggleFavorite(${p.id}); return false;">❤️ Favorite</a>
+                    </div>
+                </div>
+            `).join('');
+        }
+        
+        function filterProperties() {
+            const term = document.getElementById('searchInput').value.toLowerCase();
+            const filtered = allProperties.filter(p => 
+                p.title.toLowerCase().includes(term) || 
+                p.location.toLowerCase().includes(term) || 
+                p.desc.toLowerCase().includes(term)
+            );
+            loadProperties(filtered);
+        }
+        
+        function toggleFavorite(id) {
+            let favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
+            const idx = favorites.indexOf(id);
+            if (idx > -1) {
+                favorites.splice(idx, 1);
+            } else {
+                favorites.push(id);
+            }
+            localStorage.setItem('favorites', JSON.stringify(favorites));
+            alert('Favorite ' + (idx > -1 ? 'removed' : 'added') + '!');
+        }
+        
+        loadProperties();
+        highlightNav();
+    </script>
+</body>
+</html>
+

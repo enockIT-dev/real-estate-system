@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Real Estate System</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
+        header { background: #2c3e50; color: white; padding: 1rem 0; }
+        nav { background: #34495e; padding: 0; }
+        nav ul { list-style: none; display: flex; flex-wrap: wrap; justify-content: center; }
+        nav li { flex: 1 1 200px; text-align: center; }
+        nav a { display: block; color: white; padding: 1rem; text-decoration: none; transition: background 0.3s; }
+        nav a:hover, nav a.active { background: #2c3e50; }
+        main { padding: 2rem; max-width: 1200px; margin: auto; }
+        .user-info { background: #3498db; color: white; padding: 2rem; border-radius: 10px; margin-bottom: 2rem; text-align: center; }
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; margin-bottom: 2rem; }
+        .stat-card { background: #f8f9fa; padding: 2rem; border-radius: 10px; text-align: center; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        canvas { max-width: 100%; height: 300px; }
+        .quick-links { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-top: 2rem; }
+        .quick-link { background: #e74c3c; color: white; padding: 1rem; text-align: center; border-radius: 5px; text-decoration: none; }
+        .quick-link:hover { background: #c0392b; }
+        footer { background: #2c3e50; color: white; text-align: center; padding: 2rem; margin-top: 4rem; }
+        @media (max-width: 768px) { nav ul { flex-direction: column; } }
+    </style>
+</head>
+<body>
+    <header>
+        <h2>🏠 Real Estate System - Dashboard</h2>
+    </header>
+    <nav id="main-nav">
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="login.html">Login</a></li>
+            <li><a href="register.html">Register</a></li>
+            <li><a href="dashboard.html" class="active">Dashboard</a></li>
+            <li><a href="properties.html">Properties</a></li>
+            <li><a href="property-details.html">Property Details</a></li>
+            <li><a href="agents.html">Agents</a></li>
+            <li><a href="clients.html">Clients</a></li>
+            <li><a href="bookings.html">Bookings</a></li>
+            <li><a href="payments.html">Payments</a></li>
+            <li><a href="reports.html">Reports</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="admin.html">Admin</a></li>
+            <li><a href="add-property.html">Add Property</a></li>
+            <li><a href="edit-property.html">Edit Property</a></li>
+            <li><a href="delete-property.html">Delete Property</a></li>
+            <li><a href="search.html">Search</a></li>
+            <li><a href="favorites.html">Favorites</a></li>
+            <li><a href="messages.html">Messages</a></li>
+            <li><a href="notifications.html">Notifications</a></li>
+            <li><a href="settings.html">Settings</a></li>
+            <li><a href="profile.html">Profile</a></li>
+            <li><a href="terms.html">Terms</a></li>
+            <li><a href="help.html">Help</a></li>
+            <li><a href="faq.html">FAQ</a></li>
+            <li><a href="logout.html">Logout</a></li>
+            <li><a href="analytics.html">Analytics</a></li>
+            <li><a href="reviews.html">Reviews</a></li>
+            <li><a href="transactions.html">Transactions</a></li>
+        </ul>
+    </nav>
+    <main>
+        <div class="user-info" id="userInfo">
+            <h2>Welcome back!</h2>
+            <p>Loading...</p>
+        </div>
+        <div class="stats-grid">
+            <div class="stat-card">
+                <h3>Total Properties</h3>
+                <p id="totalProps">0</p>
+            </div>
+            <div class="stat-card">
+                <h3>Bookings</h3>
+                <p id="totalBookings">0</p>
+            </div>
+            <div class="stat-card">
+                <h3>Revenue</h3>
+                <p id="totalRevenue">$0</p>
+            </div>
+            <div class="stat-card">
+                <h3>Favorites</h3>
+                <p id="totalFavorites">0</p>
+            </div>
+        </div>
+        <div class="stat-card">
+            <h3>Recent Activity Chart</h3>
+            <canvas id="activityChart"></canvas>
+        </div>
+        <div class="quick-links">
+            <a href="properties.html" class="quick-link">View Properties</a>
+            <a href="bookings.html" class="quick-link">My Bookings</a>
+            <a href="payments.html" class="quick-link">Payments</a>
+            <a href="add-property.html" class="quick-link">Add Property</a>
+        </div>
+    </main>
+    <footer>
+        <p>&copy; 2024 Real Estate System. All rights reserved.</p>
+    </footer>
+    <script>
+        function highlightNav() {
+            const hrefs = ['index.html','login.html','register.html','dashboard.html','properties.html','property-details.html','agents.html','clients.html','bookings.html','payments.html','reports.html','contact.html','about.html','admin.html','add-property.html','edit-property.html','delete-property.html','search.html','favorites.html','messages.html','notifications.html','settings.html','profile.html','terms.html','help.html','faq.html','logout.html','analytics.html','reviews.html','transactions.html'];
+            document.querySelectorAll('nav a').forEach((a, i) => a.classList.toggle('active', hrefs[i] === location.pathname.split('/').pop() || 'index.html'));
+        }
+
+        // Check auth
+        const user = JSON.parse(localStorage.getItem('user'));
+        if (!user || !user.loggedIn) {
+            window.location.href = 'login.html';
+            throw new Error('Not logged in');
+        }
+        document.getElementById('userInfo').innerHTML = `<h2>Welcome, ${user.name}!</h2><p>${user.email}</p>`;
+
+        // Load data
+        const properties = JSON.parse(localStorage.getItem('properties') || '[]');
+        const bookings = JSON.parse(localStorage.getItem('bookings') || '[]');
+        const favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
+
+        document.getElementById('totalProps').textContent = properties.length;
+        document.getElementById('totalBookings').textContent = bookings.length;
+        document.getElementById('totalRevenue').textContent = `$${bookings.reduce((sum, b) => sum + (b.amount || 0), 0).toFixed(0)}`;
+        document.getElementById('totalFavorites').textContent = favorites.length;
+
+        // Simple canvas chart
+        const ctx = document.getElementById('activityChart').getContext('2d');
+        ctx.fillStyle = '#3498db';
+        ctx.fillRect(50, 250, 100, -50);
+        ctx.fillStyle = '#27ae60';
+        ctx.fillRect(170, 250, 100, -120);
+        ctx.fillStyle = '#e74c3c';
+        ctx.fillRect(290, 250, 100, -80);
+        ctx.fillStyle = '#f39c12';
+        ctx.fillRect(410, 250, 100, -150);
+
+        highlightNav();
+    </script>
+</body>
+</html>
+

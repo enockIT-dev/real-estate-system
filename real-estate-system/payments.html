@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payments - Real Estate System</title>
+    <style>
+        /* Similar styles */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
+        header { background: #2c3e50; color: white; padding: 1rem 0; }
+        nav { background: #34495e; padding: 0; }
+        nav ul { list-style: none; display: flex; flex-wrap: wrap; justify-content: center; }
+        nav li { flex: 1 1 200px; text-align: center; }
+        nav a { display: block; color: white; padding: 1rem; text-decoration: none; transition: background 0.3s; }
+        nav a:hover, nav a.active { background: #2c3e50; }
+        main { padding: 2rem; max-width: 1200px; margin: auto; }
+        .payment-form { background: #f8f9fa; padding: 2rem; border-radius: 10px; max-width: 500px; margin: 0 auto 2rem; }
+        .payment-item { background: white; padding: 1.5rem; border-radius: 10px; margin-bottom: 1rem; box-shadow: 0 2px 5px rgba(0,0,0,0.1); display: flex; justify-content: space-between; align-items: center; }
+        .total-balance { background: #27ae60; color: white; padding: 1.5rem; border-radius: 10px; text-align: center; margin-bottom: 2rem; font-size: 1.2rem; }
+        footer { background: #2c3e50; color: white; text-align: center; padding: 2rem; margin-top: 4rem; }
+    </style>
+</head>
+<body>
+    <header>
+        <h2>🏠 Real Estate System</h2>
+    </header>
+    <nav id="main-nav"><!-- nav --></nav>
+    <main>
+        <div class="total-balance">
+            <h3>Total Balance</h3>
+            <p id="totalBalance">$0</p>
+        </div>
+        <div id="paymentsList"></div>
+        <div class="payment-form">
+            <h3>Make Payment</h3>
+            <input type="number" id="paymentAmount" placeholder="Amount" style="width: 100%; padding: 0.75rem; margin-bottom: 1rem; border: 1px solid #ddd; border-radius: 5px;">
+            <button onclick="makePayment()" style="background: #27ae60; color: white; padding: 0.75rem 2rem; border: none; border-radius: 5px; cursor: pointer; width: 100%;">Pay Now</button>
+        </div>
+    </main>
+    <footer><!-- footer --></footer>
+    <script>
+        highlightNav();
+        
+        let payments = JSON.parse(localStorage.getItem('payments') || '[]');
+        
+        function renderPayments() {
+            const total = payments.reduce((sum, p) => sum + p.amount, 0);
+            document.getElementById('totalBalance').textContent = `$${total.toFixed(2)}`;
+            document.getElementById('paymentsList').innerHTML = payments.map(p => `
+                <div class="payment-item">
+                    <div>
+                        <strong>$${p.amount}</strong> - ${new Date(p.date).toLocaleDateString()}
+                        <br><small>${p.description}</small>
+                    </div>
+                    <span style="color: ${p.type === 'income' ? '#27ae60' : '#e74c3c'}">${p.type === 'income' ? '+' : '-'}$${p.amount}</span>
+                </div>
+            `).join('');
+        }
+        
+        function makePayment() {
+            const amount = parseFloat(document.getElementById('paymentAmount').value);
+            if (amount > 0) {
+                payments.unshift({id: Date.now(), amount, date: new Date().toISOString(), description: 'Payment', type: 'income'});
+                localStorage.setItem('payments', JSON.stringify(payments));
+                renderPayments();
+                document.getElementById('paymentAmount').value = '';
+                alert('Payment processed!');
+            }
+        }
+        
+        // Add sample data if empty
+        if (payments.length === 0) {
+            payments = [{amount: 5000, date: new Date(Date.now() - 86400000).toISOString(), description: 'Property sale', type: 'income'}];
+            localStorage.setItem('payments', JSON.stringify(payments));
+        }
+        
+        renderPayments();
+    </script>
+</body>
+</html>
+

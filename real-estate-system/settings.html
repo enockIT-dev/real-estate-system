@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings - Real Estate System</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
+        header { background: #2c3e50; color: white; padding: 1rem 0; }
+        nav { background: #34495e; padding: 0; }
+        nav ul { list-style: none; display: flex; flex-wrap: wrap; justify-content: center; }
+        nav li { flex: 1 1 200px; text-align: center; }
+        nav a { display: block; color: white; padding: 1rem; text-decoration: none; transition: background 0.3s; }
+        nav a:hover, nav a.active { background: #2c3e50; }
+        main { padding: 2rem; max-width: 800px; margin: auto; }
+        .settings-section { background: #f8f9fa; padding: 2rem; border-radius: 10px; margin-bottom: 2rem; }
+        .settings-group { margin-bottom: 1.5rem; }
+        .settings-group label { display: block; margin-bottom: 0.5rem; font-weight: bold; }
+        .settings-group input, .settings-group select { width: 100%; padding: 0.75rem; border: 1px solid #ddd; border-radius: 5px; }
+        button { background: #3498db; color: white; padding: 0.75rem 1.5rem; border: none; border-radius: 5px; cursor: pointer; }
+        .save-btn { width: 100%; font-size: 1.1rem; margin-top: 1rem; }
+        footer { background: #2c3e50; color: white; text-align: center; padding: 2rem; margin-top: 4rem; }
+    </style>
+</head>
+<body>
+    <header>
+        <h2>🏠 Real Estate System</h2>
+    </header>
+    <nav id="main-nav"><!-- nav --></nav>
+    <main>
+        <h1>Settings</h1>
+        <div class="settings-section">
+            <h2>Account Settings</h2>
+            <div class="settings-group">
+                <label>Notification Email</label>
+                <input type="email" id="notifEmail" value="user@example.com">
+            </div>
+            <div class="settings-group">
+                <label>Language</label>
+                <select id="language">
+                    <option>English</option>
+                    <option>Kinyarwanda</option>
+                </select>
+            </div>
+            <button class="save-btn" onclick="saveAccountSettings()">Save Account Settings</button>
+        </div>
+        <div class="settings-section">
+            <h2>Privacy Settings</h2>
+            <div class="settings-group">
+                <label>
+                    <input type="checkbox" id="shareData"> Allow sharing my data for recommendations
+                </label>
+            </div>
+            <div class="settings-group">
+                <label>
+                    <input type="checkbox" id="emailNotifs" checked> Email notifications
+                </label>
+            </div>
+            <button class="save-btn" onclick="savePrivacySettings()">Save Privacy Settings</button>
+        </div>
+        <div class="settings-section">
+            <h2>Danger Zone</h2>
+            <button onclick="logout()" style="background: #e74c3c;">Logout</button>
+        </div>
+    </main>
+    <footer><!-- footer --></footer>
+    <script>
+        highlightNav();
+        
+        function saveAccountSettings() {
+            alert('Account settings saved!');
+        }
+        
+        function savePrivacySettings() {
+            alert('Privacy settings saved!');
+        }
+        
+        function logout() {
+            localStorage.removeItem('user');
+            window.location.href = 'logout.html';
+        }
+    </script>
+</body>
+</html>
+

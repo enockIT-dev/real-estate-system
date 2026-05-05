@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reviews - Real Estate System</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
+        header { background: #2c3e50; color: white; padding: 1rem 0; }
+        nav { background: #34495e; padding: 0; }
+        nav ul { list-style: none; display: flex; flex-wrap: wrap; justify-content: center; }
+        nav li { flex: 1 1 200px; text-align: center; }
+        nav a { display: block; color: white; padding: 1rem; text-decoration: none; transition: background 0.3s; }
+        nav a:hover, nav a.active { background: #2c3e50; }
+        main { padding: 2rem; max-width: 1000px; margin: auto; }
+        .review-form { background: #f8f9fa; padding: 2rem; border-radius: 10px; margin-bottom: 3rem; }
+        .stars { color: #f39c12; font-size: 2rem; cursor: pointer; margin-bottom: 1rem; }
+        .stars span { margin-right: 0.5rem; }
+        .review-list { display: flex; flex-direction: column; gap: 1.5rem; }
+        .review-item { background: white; padding: 1.5rem; border-radius: 10px; box-shadow: 0 3px 15px rgba(0,0,0,0.1); }
+        .review-header { display: flex; align-items: center; margin-bottom: 0.5rem; }
+        .reviewer-avatar { width: 50px; height: 50px; border-radius: 50%; background: #ddd; margin-right: 1rem; }
+        .review-stars { color: #f39c12; margin-left: auto; }
+        .review-text { font-style: italic; color: #555; }
+        .review-date { color: #666; font-size: 0.9rem; margin-top: 0.5rem; }
+        button { background: #3498db; color: white; padding: 0.75rem 1.5rem; border: none; border-radius: 5px; cursor: pointer; }
+        textarea { width: 100%; padding: 1rem; border: 1px solid #ddd; border-radius: 5px; resize: vertical; min-height: 100px; }
+        footer { background: #2c3e50; color: white; text-align: center; padding: 2rem; margin-top: 4rem; }
+    </style>
+</head>
+<body>
+    <header>
+        <h2>🏠 Real Estate System</h2>
+    </header>
+    <nav id="main-nav"><!-- nav --></nav>
+    <main>
+        <h1>Reviews & Ratings</h1>
+        <div class="review-form">
+            <h3>Leave a Review</h3>
+            <div class="stars" id="ratingStars">
+                <span onclick="setRating(1)">★</span>
+                <span onclick="setRating(2)">★</span>
+                <span onclick="setRating(3)">★</span>
+                <span onclick="setRating(4)">★</span>
+                <span onclick="setRating(5)">★</span>
+            </div>
+            <p id="ratingText">Click to rate</p>
+            <textarea id="reviewText" placeholder="Write your review..."></textarea>
+            <button onclick="submitReview()">Submit Review</button>
+        </div>
+        <div class="review-list" id="reviewsList">
+            <!-- Dynamic reviews -->
+        </div>
+    </main>
+    <footer><!-- footer --></footer>
+    <script>
+        highlightNav();
+        
+        let currentRating = 0;
+        
+        function setRating(rating) {
+            currentRating = rating;
+            const stars = document.querySelectorAll('#ratingStars span');
+            stars.forEach((star, i) => {
+                star.style.color = i < rating ? '#f39c12' : '#ddd';
+            });
+            document.getElementById('ratingText').textContent = `Rating: ${rating}/5 stars`;
+        }
+        
+        function submitReview() {
+            const text = document.getElementById('reviewText').value.trim();
+            if (currentRating > 0 && text) {
+                // Mock save review
+                alert('Review submitted! Thank you.');
+                document.getElementById('reviewText').value = '';
+                setRating(0);
+                loadReviews();
+            } else {
+                alert('Please provide rating and review text.');
+            }
+        }
+        
+        function loadReviews() {
+            const reviewsList = document.getElementById('reviewsList');
+            const mockReviews = [
+                {name: 'John Doe', rating: 5, text: 'Excellent service! Found my dream house quickly.', date: '3 days ago'},
+                {name: 'Jane Smith', rating: 4, text: 'Good platform, responsive agents.', date: '1 week ago'},
+                {name: 'Mike Johnson', rating: 5, text: 'Highly recommend! Smooth booking process.', date: '2 weeks ago'}
+            ];
+            
+            reviewsList.innerHTML = mockReviews.map(r => `
+                <div class="review-item">
+                    <div class="review-header">
+                        <div class="reviewer-avatar"></div>
+                        <div>
+                            <strong>${r.name}</strong>
+                            <div class="review-stars">${'★'.repeat(r.rating)}${'☆'.repeat(5-r.rating)}</div>
+                        </div>
+                    </div>
+                    <p class="review-text">${r.text}</p>
+                    <div class="review-date">${r.date}</div>
+                </div>
+            `).join('');
+        }
+        
+        loadReviews();
+    </script>
+</body>
+</html>
+

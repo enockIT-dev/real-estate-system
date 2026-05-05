@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Error 404 - Real Estate System</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; min-height: 100vh; display: flex; flex-direction: column; }
+        header { background: #2c3e50; color: white; padding: 1rem 0; }
+        nav { background: #34495e; padding: 0; }
+        nav ul { list-style: none; display: flex; flex-wrap: wrap; justify-content: center; }
+        nav li { flex: 1 1 200px; text-align: center; }
+        nav a { display: block; color: white; padding: 1rem; text-decoration: none; transition: background 0.3s; }
+        nav a:hover { background: #2c3e50; }
+        main { flex: 1; display: flex; align-items: center; justify-content: center; text-align: center; padding: 2rem; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; }
+        .error-container { max-width: 600px; }
+        .error-code { font-size: 10rem; font-weight: bold; margin-bottom: 0.5rem; opacity: 0.9; }
+        h1 { font-size: 2.5rem; margin-bottom: 1rem; }
+        .error-message { font-size: 1.3rem; margin-bottom: 2rem; opacity: 0.9; }
+        .btn-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; max-width: 500px; margin: 0 auto; }
+        .btn { background: rgba(255,255,255,0.2); color: white; padding: 1.5rem 2rem; text-decoration: none; border-radius: 50px; backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.3); transition: all 0.3s; font-weight: bold; }
+        .btn:hover { background: rgba(255,255,255,0.3); transform: translateY(-3px); box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
+        .search-again { background: rgba(52, 152, 219, 0.3) !important; }
+        footer { background: #2c3e50; color: white; text-align: center; padding: 2rem; flex-shrink: 0; }
+        @media (max-width: 768px) { .error-code { font-size: 6rem; } nav ul { flex-direction: column; } }
+    </style>
+</head>
+<body>
+    <header>
+        <h2>🏠 Real Estate System</h2>
+    </header>
+    <nav id="main-nav"><!-- nav --></nav>
+    <main>
+        <div class="error-container">
+            <div class="error-code">404</div>
+            <h1>Oops! Page Not Found</h1>
+            <p class="error-message">The page you're looking for doesn't exist or has been moved.</p>
+            <div class="btn-grid">
+                <a href="index.html" class="btn">🏠 Home</a>
+                <a href="properties.html" class="btn search-again">🔍 Properties</a>
+                <a href="dashboard.html" class="btn">📊 Dashboard</a>
+                <a href="contact.html" class="btn">💬 Contact Support</a>
+            </div>
+        </div>
+    </main>
+    <footer>
+        <p>&copy; 2024 Real Estate System | <a href="help.html" style="color: #3498db;">Help</a> | <a href="terms.html" style="color: #3498db;">Terms</a></p>
+    </footer>
+    <script>
+        highlightNav();
+    </script>
+</body>
+</html>
+

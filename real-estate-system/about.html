@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About - Real Estate System</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
+        header { background: #2c3e50; color: white; padding: 1rem 0; }
+        nav { background: #34495e; padding: 0; }
+        nav ul { list-style: none; display: flex; flex-wrap: wrap; justify-content: center; }
+        nav li { flex: 1 1 200px; text-align: center; }
+        nav a { display: block; color: white; padding: 1rem; text-decoration: none; transition: background 0.3s; }
+        nav a:hover, nav a.active { background: #2c3e50; }
+        main { padding: 2rem; max-width: 1000px; margin: auto; }
+        .about-hero { background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://source.unsplash.com/1200x600/?real-estate,office') center/cover; color: white; text-align: center; padding: 5rem 2rem; border-radius: 10px; margin-bottom: 3rem; }
+        .about-sections { display: grid; gap: 3rem; }
+        .about-section { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center; }
+        .about-section img { width: 100%; height: 300px; object-fit: cover; border-radius: 10px; }
+        footer { background: #2c3e50; color: white; text-align: center; padding: 2rem; margin-top: 4rem; }
+        @media (max-width: 768px) { nav ul { flex-direction: column; } .about-section { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+    <header>
+        <h2>🏠 Real Estate System</h2>
+    </header>
+    <nav id="main-nav"><!-- nav --></nav>
+    <main>
+        <section class="about-hero">
+            <h1>About Us</h1>
+            <p>Your trusted partner in real estate</p>
+        </section>
+        <div class="about-sections">
+            <div class="about-section">
+                <div>
+                    <h2>Our Mission</h2>
+                    <p>To provide the best real estate services in Rwanda with transparency and efficiency.</p>
+                </div>
+                <img src="https://source.unsplash.com/500x300/?team" alt="Team">
+            </div>
+            <div class="about-section">
+                <div>
+                    <h2>Our Vision</h2>
+                    <p>Leading the real estate market with innovative solutions.</p>
+                </div>
+                <img src="https://source.unsplash.com/500x300/?vision" alt="Vision">
+            </div>
+        </div>
+    </main>
+    <footer>
+        <p>&copy; 2024 Real Estate System. All rights reserved.</p>
+    </footer>
+    <script>
+        highlightNav();
+    </script>
+</body>
+</html>
+

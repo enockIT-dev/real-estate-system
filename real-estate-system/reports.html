@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reports - Real Estate System</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
+        header { background: #2c3e50; color: white; padding: 1rem 0; }
+        nav { background: #34495e; padding: 0; }
+        nav ul { list-style: none; display: flex; flex-wrap: wrap; justify-content: center; }
+        nav li { flex: 1 1 200px; text-align: center; }
+        nav a { display: block; color: white; padding: 1rem; text-decoration: none; transition: background 0.3s; }
+        nav a:hover, nav a.active { background: #2c3e50; }
+        main { padding: 2rem; max-width: 1200px; margin: auto; }
+        .reports-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 2rem; }
+        .report-card { background: white; padding: 2rem; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+        .report-chart { height: 300px; position: relative; }
+        footer { background: #2c3e50; color: white; text-align: center; padding: 2rem; margin-top: 4rem; }
+        @media (max-width: 768px) { nav ul { flex-direction: column; } }
+    </style>
+</head>
+<body>
+    <header>
+        <h2>🏠 Real Estate System</h2>
+    </header>
+    <nav id="main-nav"><!-- 30 nav links --></nav>
+    <main>
+        <h1>Reports & Analytics</h1>
+        <div class="reports-grid">
+            <div class="report-card">
+                <h3>Monthly Revenue</h3>
+                <canvas id="revenueChart" class="report-chart"></canvas>
+            </div>
+            <div class="report-card">
+                <h3>Bookings Trend</h3>
+                <canvas id="bookingsChart" class="report-chart"></canvas>
+            </div>
+            <div class="report-card">
+                <h3>Top Properties</h3>
+                <ul id="topProps"></ul>
+            </div>
+        </div>
+    </main>
+    <footer><!-- footer --></footer>
+    <script>
+        highlightNav();
+        
+        // Data
+        const payments = JSON.parse(localStorage.getItem('payments') || '[]');
+        const bookings = JSON.parse(localStorage.getItem('bookings') || '[]');
+        
+        // Simple bar chart for revenue
+        function drawBarChart(canvasId, data, colors) {
+            const ctx = document.getElementById(canvasId).getContext('2d');
+            const max = Math.max(...data);
+            data.forEach((val, i) => {
+                ctx.fillStyle = colors[i % colors.length];
+                ctx.fillRect(50 + i*100, 300 - (val/max*250), 80, val/max*250);
+                ctx.fillStyle = '#333';
+                ctx.fillText(val.toFixed(0), 60 + i*100, 290 - (val/max*250));
+            });
+        }
+        
+        drawBarChart('revenueChart', [5000, 7000, 6000, 9000, 8000, 11000], ['#3498db', '#27ae60', '#f39c12', '#e74c3c', '#9b59b6', '#1abc9c']);
+        drawBarChart('bookingsChart', [10, 15, 12, 20, 18, 25], ['#3498db', '#27ae60', '#f39c12']);
+        
+        // Top properties mock
+        document.getElementById('topProps').innerHTML = `
+            <li>Property 1 - 15 views</li>
+            <li>Property 2 - 12 views</li>
+            <li>Property 3 - 10 views</li>
+        `;
+    </script>
+</body>
+</html>
+

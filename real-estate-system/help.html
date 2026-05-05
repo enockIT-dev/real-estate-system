@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Help - Real Estate System</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
+        header { background: #2c3e50; color: white; padding: 1rem 0; }
+        nav { background: #34495e; padding: 0; }
+        nav ul { list-style: none; display: flex; flex-wrap: wrap; justify-content: center; }
+        nav li { flex: 1 1 200px; text-align: center; }
+        nav a { display: block; color: white; padding: 1rem; text-decoration: none; transition: background 0.3s; }
+        nav a:hover, nav a.active { background: #2c3e50; }
+        main { padding: 2rem; max-width: 1000px; margin: auto; }
+        .help-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; }
+        .help-card { background: #f8f9fa; padding: 2rem; border-radius: 10px; text-align: center; }
+        .help-card h3 { color: #2c3e50; margin-bottom: 1rem; }
+        .search-section { background: white; padding: 2rem; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); margin-bottom: 2rem; text-align: center; }
+        input[type="text"] { width: 70%; max-width: 500px; padding: 1rem; border: 2px solid #ddd; border-radius: 25px; font-size: 1rem; }
+        button { background: #3498db; color: white; padding: 1rem 2rem; border: none; border-radius: 25px; cursor: pointer; margin-left: 1rem; }
+        footer { background: #2c3e50; color: white; text-align: center; padding: 2rem; margin-top: 4rem; }
+    </style>
+</head>
+<body>
+    <header>
+        <h2>🏠 Real Estate System</h2>
+    </header>
+    <nav id="main-nav"><!-- nav --></nav>
+    <main>
+        <div class="search-section">
+            <h1>Help & Support</h1>
+            <p>Search for help articles or contact support</p>
+            <input type="text" placeholder="Search help articles...">
+            <button>Search</button>
+        </div>
+        <div class="help-grid">
+            <div class="help-card">
+                <h3>📋 How to list a property</h3>
+                <p>Step-by-step guide to add your property to our platform.</p>
+                <a href="#" style="color: #3498db;">Read guide →</a>
+            </div>
+            <div class="help-card">
+                <h3>💳 Payment issues</h3>
+                <p>Troubleshooting common payment problems.</p>
+                <a href="#" style="color: #3498db;">Learn more →</a>
+            </div>
+            <div class="help-card">
+                <h3>🏠 Booking confirmation</h3>
+                <p>Understand your booking process and status.</p>
+                <a href="#" style="color: #3498db;">View details →</a>
+            </div>
+            <div class="help-card">
+                <h3>👤 Account management</h3>
+                <p>Manage your profile, password, and preferences.</p>
+                <a href="settings.html" style="color: #3498db;">Go to settings →</a>
+            </div>
+        </div>
+        <div style="text-align: center; margin: 3rem 0;">
+            <h3>Still need help?</h3>
+            <a href="contact.html" style="background: #e74c3c; color: white; padding: 1rem 2rem; text-decoration: none; border-radius: 5px; display: inline-block;">Contact Support</a>
+        </div>
+    </main>
+    <footer><!-- footer --></footer>
+    <script>
+        highlightNav();
+    </script>
+</body>
+</html>
+

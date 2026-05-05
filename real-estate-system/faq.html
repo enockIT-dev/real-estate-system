@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FAQ - Real Estate System</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
+        header { background: #2c3e50; color: white; padding: 1rem 0; }
+        nav { background: #34495e; padding: 0; }
+        nav ul { list-style: none; display: flex; flex-wrap: wrap; justify-content: center; }
+        nav li { flex: 1 1 200px; text-align: center; }
+        nav a { display: block; color: white; padding: 1rem; text-decoration: none; transition: background 0.3s; }
+        nav a:hover, nav a.active { background: #2c3e50; }
+        main { padding: 2rem; max-width: 900px; margin: auto; }
+        .faq-item { background: white; margin-bottom: 1rem; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); overflow: hidden; }
+        .faq-question { background: #3498db; color: white; padding: 1.5rem; cursor: pointer; font-weight: bold; position: relative; }
+        .faq-answer { padding: 1.5rem; display: none; }
+        .faq-item.active .faq-answer { display: block; }
+        .faq-question::after { content: '+'; float: right; font-size: 1.5rem; transition: transform 0.3s; }
+        .faq-item.active .faq-question::after { transform: rotate(45deg); }
+        .search-section { text-align: center; margin-bottom: 3rem; }
+        input[type="text"] { width: 60%; max-width: 400px; padding: 1rem; border: 2px solid #ddd; border-radius: 25px; }
+        footer { background: #2c3e50; color: white; text-align: center; padding: 2rem; margin-top: 4rem; }
+    </style>
+</head>
+<body>
+    <header>
+        <h2>🏠 Real Estate System</h2>
+    </header>
+    <nav id="main-nav"><!-- nav --></nav>
+    <main>
+        <div class="search-section">
+            <h1>Frequently Asked Questions</h1>
+            <p>Find answers to common questions</p>
+            <input type="text" id="faqSearch" placeholder="Search FAQ...">
+        </div>
+        <div id="faqList">
+            <div class="faq-item">
+                <div class="faq-question">How do I list my property?</div>
+                <div class="faq-answer">Go to "Add Property" from dashboard. Fill all details and submit. Your property will be reviewed and listed.</div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">What payment methods do you accept?</div>
+                <div class="faq-answer">We accept all major credit cards, mobile money (MTN MoMo, Airtel Money), and bank transfers.</div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">How long does booking confirmation take?</div>
+                <div class="faq-answer">Most bookings are confirmed within 24 hours. You will receive email notification.</div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">Can I cancel my booking?</div>
+                <div class="faq-answer">Yes, you can cancel bookings from "My Bookings" page. Cancellation policy varies by property.</div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">Is my data secure?</div>
+                <div class="faq-answer">Yes, we use industry-standard encryption and security measures to protect your data.</div>
+            </div>
+        </div>
+    </main>
+    <footer><!-- footer --></footer>
+    <script>
+        highlightNav();
+        
+        // FAQ toggle
+        document.querySelectorAll('.faq-question').forEach(question => {
+            question.addEventListener('click', () => {
+                const item = question.parentElement;
+                item.classList.toggle('active');
+            });
+        });
+        
+        // FAQ search
+        document.getElementById('faqSearch').addEventListener('input', (e) => {
+            const term = e.target.value.toLowerCase();
+            document.querySelectorAll('.faq-item').forEach(item => {
+                const text = item.textContent.toLowerCase();
+                item.style.display = text.includes(term) ? 'block' : 'none';
+            });
+        });
+    </script>
+</body>
+</html>
+

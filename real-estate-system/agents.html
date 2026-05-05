@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agents - Real Estate System</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
+        header { background: #2c3e50; color: white; padding: 1rem 0; }
+        nav { background: #34495e; padding: 0; }
+        nav ul { list-style: none; display: flex; flex-wrap: wrap; justify-content: center; }
+        nav li { flex: 1 1 200px; text-align: center; }
+        nav a { display: block; color: white; padding: 1rem; text-decoration: none; transition: background 0.3s; }
+        nav a:hover, nav a.active { background: #2c3e50; }
+        main { padding: 2rem; max-width: 1200px; margin: auto; }
+        .agents-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 2rem; }
+        .agent-card { background: white; border-radius: 10px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.1); text-align: center; padding: 2rem; }
+        .agent-img { width: 120px; height: 120px; border-radius: 50%; background-size: cover; margin: 0 auto 1rem; background-color: #ddd; }
+        .agent-name { font-size: 1.4rem; margin-bottom: 0.5rem; }
+        .agent-stats { color: #666; margin-bottom: 1rem; }
+        .btn { background: #3498db; color: white; padding: 0.75rem 1.5rem; border-radius: 5px; text-decoration: none; display: inline-block; }
+        .add-agent { background: #27ae60; margin-bottom: 2rem; padding: 1rem 2rem; font-size: 1.1rem; }
+        footer { background: #2c3e50; color: white; text-align: center; padding: 2rem; margin-top: 4rem; }
+        @media (max-width: 768px) { nav ul { flex-direction: column; } .agents-grid { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+    <header>
+        <h2>🏠 Real Estate System</h2>
+    </header>
+    <nav id="main-nav">
+        <ul><!-- 30 nav links --></ul>
+    </nav>
+    <main>
+        <div id="addAgentForm" style="background: #f8f9fa; padding: 2rem; border-radius: 10px; margin-bottom: 2rem; display: none;">
+            <h3>Add New Agent</h3>
+            <input type="text" id="agentName" placeholder="Agent Name" style="width: 200px; padding: 0.75rem; margin-right: 1rem;">
+            <input type="tel" id="agentPhone" placeholder="Phone" style="width: 200px; padding: 0.75rem; margin-right: 1rem;">
+            <input type="email" id="agentEmail" placeholder="Email" style="width: 200px; padding: 0.75rem;">
+            <button onclick="addAgent()" style="background: #27ae60; color: white; padding: 0.75rem 1.5rem; border: none; border-radius: 5px;">Add Agent</button>
+            <button onclick="toggleAddAgentForm()" style="background: #95a5a6; color: white; padding: 0.75rem 1.5rem; border: none; border-radius: 5px; margin-left: 1rem;">Cancel</button>
+        </div>
+        <button onclick="toggleAddAgentForm()" class="add-agent btn">+ Add New Agent</button>
+        <h2>Our Agents</h2>
+        <div id="agentsGrid" class="agents-grid">
+            <!-- Dynamic -->
+        </div>
+    </main>
+    <footer>
+        <p>&copy; 2024 Real Estate System.</p>
+    </footer>
+    <script>
+        highlightNav();
+        
+        // Mock agents
+        const agents = [
+            {id:1, name:'John Doe', phone:'+250 788 123456', email:'john@example.com', img:'https://source.unsplash.com/120x120/?portrait,1', properties:12},
+            {id:2, name:'Jane Smith', phone:'+250 788 234567', email:'jane@example.com', img:'https://source.unsplash.com/120x120/?portrait,2', properties:8},
+            {id:3, name:'Mike Johnson', phone:'+250 788 345678', email:'mike@example.com', img:'https://source.unsplash.com/120x120/?portrait,3', properties:15},
+            // Add more...
+        ];
+        
+        if (!localStorage.getItem('agents')) {
+            localStorage.setItem('agents', JSON.stringify(agents));
+        }
+        
+        const savedAgents = JSON.parse(localStorage.getItem('agents') || '[]');
+        function renderAgents() {
+            document.getElementById('agentsGrid').innerHTML = savedAgents.map(a => `
+                <div class="agent-card">
+                    <div class="agent-img" style="background-image: url('${a.img}')"></div>
+                    <div class="agent-name">${a.name}</div>
+                    <div class="agent-stats">${a.properties || 0} Properties | ${a.phone}</div>
+                    <p>${a.email}</p>
+                    <a href="#" class="btn" onclick="contactAgent(${a.id})">Contact</a>
+                </div>
+            `).join('');
+        }
+        renderAgents();
+        
+        function toggleAddAgentForm() {
+            const form = document.getElementById('addAgentForm');
+            form.style.display = form.style.display === 'block' ? 'none' : 'block';
+        }
+        
+        function addAgent() {
+            const name = document.getElementById('agentName').value.trim();
+            const phone = document.getElementById('agentPhone').value.trim();
+            const email = document.getElementById('agentEmail').value.trim();
+            
+            if (name && email) {
+                const newAgent = {
+                    id: Date.now(),
+                    name,
+                    phone,
+                    email,
+                    img: `https://source.unsplash.com/120x120/?portrait,${Math.random()}`,
+                    properties: 0
+                };
+                savedAgents.push(newAgent);
+                localStorage.setItem('agents', JSON.stringify(savedAgents));
+                renderAgents();
+                document.getElementById('addAgentForm').querySelectorAll('input').forEach(input => input.value = '');
+                toggleAddAgentForm();
+                alert('New agent added successfully!');
+            } else {
+                alert('Please fill name and email.');
+            }
+        }
+        
+        function contactAgent(id) {
+            alert('Contacting agent...');
+            window.location.href = 'messages.html';
+        }
+    </script>
+</body>
+</html>
+

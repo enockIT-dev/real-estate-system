@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - Real Estate System</title>
+    <style>
+        /* Same styles as login.html */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; display: flex; min-height: 100vh; }
+        header { background: #2c3e50; color: white; padding: 1rem 0; position: fixed; width: 100%; top: 0; z-index: 10; }
+        nav { background: #34495e; padding: 0; margin-top: 80px; }
+        nav ul { list-style: none; display: flex; flex-wrap: wrap; justify-content: center; }
+        nav li { flex: 1 1 200px; text-align: center; }
+        nav a { display: block; color: white; padding: 1rem; text-decoration: none; transition: background 0.3s; }
+        nav a:hover, nav a.active { background: #2c3e50; }
+        main { flex: 1; padding: 100px 2rem 2rem; max-width: 400px; margin: auto; }
+        .form-container { background: #f8f9fa; padding: 2rem; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+        .form-group { margin-bottom: 1rem; }
+        label { display: block; margin-bottom: 0.5rem; font-weight: bold; }
+        input { width: 100%; padding: 0.75rem; border: 1px solid #ddd; border-radius: 5px; }
+        button { background: #27ae60; color: white; padding: 0.75rem 1.5rem; border: none; border-radius: 5px; cursor: pointer; width: 100%; font-size: 1rem; }
+        button:hover { background: #229954; }
+        .error, .success { margin-top: 0.5rem; }
+        .error { color: #e74c3c; }
+        .success { color: #27ae60; }
+        footer { background: #2c3e50; color: white; text-align: center; padding: 1rem; position: fixed; bottom: 0; width: 100%; }
+        @media (max-width: 768px) { nav ul { flex-direction: column; } }
+    </style>
+</head>
+<body>
+    <header>
+        <h2>🏠 Real Estate System</h2>
+    </header>
+    <nav id="main-nav">
+        <ul><!-- Same nav links --></ul>
+    </nav>
+    <main>
+        <div class="form-container">
+            <h2>Register</h2>
+            <form id="registerForm">
+                <div class="form-group">
+                    <label for="name">Full Name:</label>
+                    <input type="text" id="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" required minlength="6">
+                </div>
+                <div class="form-group">
+                    <label for="phone">Phone:</label>
+                    <input type="tel" id="phone">
+                </div>
+                <button type="submit">Register</button>
+                <div id="msg" class="error"></div>
+            </form>
+            <p style="text-align: center; margin-top: 1rem;">Already have an account? <a href="login.html">Login here</a></p>
+        </div>
+    </main>
+    <footer>
+        <p>&copy; 2024 Real Estate System.</p>
+    </footer>
+    <script>
+        function highlightNav() {/* same as above */}
+        
+        document.getElementById('registerForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            if (name && email && password.length >= 6) {
+                localStorage.setItem('user', JSON.stringify({name, email, loggedIn: true}));
+                document.getElementById('msg').textContent = 'Registration successful! Redirecting...';
+                document.getElementById('msg').className = 'success';
+                setTimeout(() => window.location.href = 'dashboard.html', 1500);
+            } else {
+                document.getElementById('msg').textContent = 'Please fill all fields correctly.';
+            }
+        });
+        highlightNav();
+    </script>
+</body>
+</html>

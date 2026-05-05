@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search - Real Estate System</title>
+    <style>
+        /* Similar to properties */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
+        header { background: #2c3e50; color: white; padding: 1rem 0; }
+        nav { background: #34495e; padding: 0; }
+        nav ul { list-style: none; display: flex; flex-wrap: wrap; justify-content: center; }
+        nav li { flex: 1 1 200px; text-align: center; }
+        nav a { display: block; color: white; padding: 1rem; text-decoration: none; transition: background 0.3s; }
+        nav a:hover, nav a.active { background: #2c3e50; }
+        main { padding: 2rem; }
+        .search-hero { background: #f8f9fa; padding: 4rem 2rem; text-align: center; }
+        .search-inputs { max-width: 800px; margin: 0 auto 3rem; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; }
+        .search-inputs input, .search-inputs select { padding: 1rem; border: 2px solid #ddd; border-radius: 5px; font-size: 1rem; }
+        button.search-btn { background: #3498db; color: white; border: none; padding: 1rem 2rem; border-radius: 5px; cursor: pointer; grid-column: 1 / -1; font-size: 1.1rem; }
+        .results-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 2rem; padding: 0 2rem; max-width: 1200px; margin: auto; }
+        .property-card {/* same as properties */}
+        footer { background: #2c3e50; color: white; text-align: center; padding: 2rem; margin-top: 4rem; }
+    </style>
+</head>
+<body>
+    <header>
+        <h2>🏠 Real Estate System</h2>
+    </header>
+    <nav id="main-nav"><!-- nav --></nav>
+    <main>
+        <section class="search-hero">
+            <h1>Advanced Search</h1>
+            <div class="search-inputs">
+                <input type="text" id="keyword" placeholder="Keyword (title, desc)">
+                <input type="number" id="minPrice" placeholder="Min Price">
+                <input type="number" id="maxPrice" placeholder="Max Price">
+                <select id="location">
+                    <option>All Locations</option>
+                    <option>Kigali</option>
+                    <option>Musanze</option>
+                    <option>Huye</option>
+                    <option>Rubavu</option>
+                    <option>Nyamata</option>
+                    <option>Rwamagana</option>
+                    <option>Gisenyi</option>
+                </select>
+                <button class="search-btn" onclick="performSearch()">Search Properties</button>
+            </div>
+        </section>
+        <div id="searchResults" class="results-grid"></div>
+    </main>
+    <footer><!-- footer --></footer>
+    <script>
+        highlightNav();
+        
+        const properties = JSON.parse(localStorage.getItem('properties') || '[]');
+        
+        function performSearch() {
+            const keyword = document.getElementById('keyword').value.toLowerCase();
+            const minPrice = parseFloat(document.getElementById('minPrice').value) || 0;
+            const maxPrice = parseFloat(document.getElementById('maxPrice').value) || Infinity;
+            const location = document.getElementById('location').value;
+            
+            const filtered = properties.filter(p => 
+                (!keyword || p.title.toLowerCase().includes(keyword) || p.desc.toLowerCase().includes(keyword) || p.location.toLowerCase().includes(keyword)) &&
+                p.price >= minPrice && p.price <= maxPrice &&
+                (!location || p.location === location)
+            );
+            
+            const grid = document.getElementById('searchResults');
+            if (filtered.length === 0) {
+                grid.innerHTML = '<p style="grid-column: 1/-1; text-align: center; font-size: 1.2rem;">No properties found. Try different filters.</p>';
+            } else {
+                grid.innerHTML = filtered.map(p => `
+                    <div class="property-card">
+                        <div class="property-img" style="background-image: url('${p.img}')"></div>
+                        <div class="property-info">
+                            <h3>${p.title}</h3>
+                            <div style="color: #27ae60; font-size: 1.5rem;">$${p.price}K</div>
+                            <p>${p.location}</p>
+                            <a href="property-details.html?id=${p.id}" class="btn">View Details</a>
+                        </div>
+                    </div>
+                `).join('');
+            }
+        }
+    </script>
+</body>
+</html>
+

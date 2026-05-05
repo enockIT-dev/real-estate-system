@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile - Real Estate System</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
+        header { background: #2c3e50; color: white; padding: 1rem 0; }
+        nav { background: #34495e; padding: 0; }
+        nav ul { list-style: none; display: flex; flex-wrap: wrap; justify-content: center; }
+        nav li { flex: 1 1 200px; text-align: center; }
+        nav a { display: block; color: white; padding: 1rem; text-decoration: none; transition: background 0.3s; }
+        nav a:hover, nav a.active { background: #2c3e50; }
+        main { padding: 2rem; max-width: 800px; margin: auto; }
+        .profile-header { text-align: center; margin-bottom: 3rem; }
+        .profile-avatar { width: 150px; height: 150px; border-radius: 50%; background: #ddd url('https://source.unsplash.com/150x150/?portrait') center/cover; margin: 0 auto 1rem; }
+        .profile-info { background: #f8f9fa; padding: 2rem; border-radius: 10px; }
+        .info-row { display: flex; justify-content: space-between; margin-bottom: 1rem; padding-bottom: 1rem; border-bottom: 1px solid #eee; }
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-top: 2rem; }
+        .stat { background: white; padding: 1.5rem; border-radius: 10px; text-align: center; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        button { background: #3498db; color: white; padding: 0.75rem 1.5rem; border: none; border-radius: 5px; cursor: pointer; }
+        footer { background: #2c3e50; color: white; text-align: center; padding: 2rem; margin-top: 4rem; }
+    </style>
+</head>
+<body>
+    <header>
+        <h2>🏠 Real Estate System</h2>
+    </header>
+    <nav id="main-nav"><!-- nav --></nav>
+    <main>
+        <div class="profile-header">
+            <div class="profile-avatar"></div>
+            <h1 id="profileName">Loading...</h1>
+        </div>
+        <div class="profile-info">
+            <div class="info-row">
+                <span>Email:</span>
+                <strong id="profileEmail">user@example.com</strong>
+            </div>
+            <div class="info-row">
+                <span>Phone:</span>
+                <strong id="profilePhone">-</strong>
+            </div>
+            <div class="info-row">
+                <span>Member since:</span>
+                <strong id="memberSince">-</strong>
+            </div>
+        </div>
+        <div class="stats-grid">
+            <div class="stat">
+                <h3 id="totalBookingsStat">0</h3>
+                <p>Bookings</p>
+            </div>
+            <div class="stat">
+                <h3 id="totalFavoritesStat">0</h3>
+                <p>Favorites</p>
+            </div>
+            <div class="stat">
+                <h3 id="totalPaymentsStat">$0</h3>
+                <p>Total Spent</p>
+            </div>
+        </div>
+        <div style="text-align: center; margin-top: 2rem;">
+            <button onclick="editProfile()">Edit Profile</button>
+        </div>
+    </main>
+    <footer><!-- footer --></footer>
+    <script>
+        highlightNav();
+        
+        const user = JSON.parse(localStorage.getItem('user'));
+        if (!user) window.location.href = 'login.html';
+        
+        document.getElementById('profileName').textContent = user.name;
+        document.getElementById('profileEmail').textContent = user.email;
+        document.getElementById('memberSince').textContent = new Date().toLocaleDateString();
+        
+        const bookings = JSON.parse(localStorage.getItem('bookings') || '[]');
+        const favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
+        const payments = JSON.parse(localStorage.getItem('payments') || '[]');
+        
+        document.getElementById('totalBookingsStat').textContent = bookings.length;
+        document.getElementById('totalFavoritesStat').textContent = favorites.length;
+        document.getElementById('totalPaymentsStat').textContent = `$${payments.reduce((sum, p) => sum + p.amount, 0).toFixed(0)}`;
+        
+        function editProfile() {
+            alert('Redirecting to edit profile...');
+            window.location.href = 'settings.html';
+        }
+    </script>
+</body>
+</html>
+

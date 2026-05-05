@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Property Map - Real Estate System</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; height: 100vh; }
+        header { background: #2c3e50; color: white; padding: 1rem 0; position: fixed; width: 100%; z-index: 1000; }
+        nav { background: #34495e; padding: 0; margin-top: 80px; position: fixed; width: 100%; z-index: 999; max-height: 60vh; overflow-y: auto; }
+        nav ul { list-style: none; display: flex; flex-wrap: wrap; justify-content: center; }
+        nav li { flex: 1 1 200px; text-align: center; }
+        nav a { display: block; color: white; padding: 0.8rem; text-decoration: none; transition: background 0.3s; border-bottom: 1px solid rgba(255,255,255,0.1); }
+        nav a:hover { background: #2c3e50; }
+        main { margin-top: 160px; padding: 1rem; height: calc(100vh - 160px); }
+        #map { height: 100%; width: 100%; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); }
+        .map-controls { position: fixed; bottom: 20px; right: 20px; background: white; padding: 1rem; border-radius: 10px; box-shadow: 0 4px 20px rgba(0,0,0,0.3); z-index: 1001; }
+        .control-btn { display: block; background: #3498db; color: white; padding: 0.75rem 1rem; margin-bottom: 0.5rem; text-decoration: none; border-radius: 5px; text-align: center; }
+        .properties-panel { position: fixed; top: 160px; left: 20px; background: white; width: 350px; max-height: calc(100vh - 200px); overflow-y: auto; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); padding: 1.5rem; z-index: 998; display: none; }
+        .property-item { border-bottom: 1px solid #eee; padding: 1rem 0; cursor: pointer; }
+        .property-item:last-child { border-bottom: none; }
+        .property-img { width: 60px; height: 60px; background-size: cover; border-radius: 5px; float: left; margin-right: 1rem; }
+        footer { background: #2c3e50; color: white; text-align: center; padding: 1rem; position: fixed; bottom: 0; width: 100%; }
+    </style>
+</head>
+<body>
+    <header>
+        <h2>🏠 Real Estate System - Interactive Map</h2>
+    </header>
+    <nav id="main-nav"><!-- nav links --></nav>
+    <main>
+        <div id="map"></div>
+        <div class="properties-panel" id="propertiesPanel">
+            <h3>Nearby Properties</h3>
+            <div id="propertyList"></div>
+        </div>
+        <div class="map-controls">
+            <a href="#" class="control-btn" onclick="toggleProperties()">📋 Properties</a>
+            <a href="#" class="control-btn" onclick="centerKigali()">📍 Kigali Center</a>
+            <a href="#" class="control-btn" onclick="fitProperties()">🔍 Fit All</a>
+        </div>
+    </main>
+    <footer>
+        <p>Drag to explore | Click markers for details</p>
+    </footer>
+    <script>
+        highlightNav();
+        
+        // Mock map with Leaflet CDN
+        const properties = JSON.parse(localStorage.getItem('properties') || '[]');
+        
+        // Simple mock map (full Leaflet.js would be ~140kb)
+        const mapDiv = document.getElementById('map');
+        mapDiv.innerHTML = `
+            <div style="height: 100%; background: linear-gradient(45deg, #3498db, #2c3e50); position: relative;">
+                <div style="position: absolute; top: 20px; left: 20px; background: white; padding: 1rem; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.3);">
+                    <h4 style="margin: 0 0 1rem 0;">🗺️ Interactive Map</h4>
+                    <p><strong>Zoom & Pan</strong> to explore</p>
+                    <p>📍 ${properties.length} properties loaded</p>
+                    <div style="margin-top: 1rem;">
+                        ${properties.slice(0,5).map(p => `
+                            <div style="margin-bottom: 0.5rem; padding: 0.5rem; background: #f8f9fa; border-radius: 5px; cursor: pointer;" onclick="showProperty(${p.id})">
+                                🏠 ${p.title.substring(0,30)}...
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+                ${Array.from({length: Math.min(20, properties.length)}, (_, i) => `
+                    <div style="position: absolute; top: ${15 + Math.random()*70}%; left: ${15 + Math.random()*70}%; transform: translate(-50%, -100%);
+                                background: #e74c3c; color: white; width: 40px; height: 40px; border-radius: 50%; 
+                                display: flex; align-items: center; justify-content: center; font-weight: bold; cursor: pointer;
+                                box-shadow: 0 4px 15px rgba(231,76,60,0.4);" title="Property ${i+1}" onclick="showProperty(${i+1})">
+                        🏠
+                    </div>
+                `).join('')}
+            </div>
+        `;
+        
+        function showProperty(id) {
+            alert(`Property ${id} details:\n${properties[id-1]?.title || 'Loading...'}`);
+        }
+        
+        function toggleProperties() {
+            const panel = document.getElementById('propertiesPanel');
+            panel.style.display = panel.style.display === 'block' ? 'none' : 'block';
+        }
+        
+        function centerKigali() {
+            alert('Centering on Kigali!');
+        }
+        
+        function fitProperties() {
+            alert('Fitting all properties!');
+        }
+    </script>
+</body>
+</html>
+

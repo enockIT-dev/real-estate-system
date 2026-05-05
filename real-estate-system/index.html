@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Real Estate System - Home</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="js/main.js" defer></script>
+</head>
+<body>
+    <header>
+        <h2>🏠 Real Estate System</h2>
+    </header>
+    <nav id="main-nav">
+        <ul>
+            <li><a href="index.html" class="active">Home</a></li>
+            <li><a href="login.html">Login</a></li>
+            <li><a href="register.html">Register</a></li>
+            <li><a href="dashboard.html">Dashboard</a></li>
+            <li><a href="properties.html">Properties</a></li>
+            <li><a href="property-details.html">Property Details</a></li>
+            <li><a href="agents.html">Agents</a></li>
+            <li><a href="clients.html">Clients</a></li>
+            <li><a href="bookings.html">Bookings</a></li>
+            <li><a href="payments.html">Payments</a></li>
+            <li><a href="reports.html">Reports</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="admin.html">Admin</a></li>
+            <li><a href="add-property.html">Add Property</a></li>
+            <li><a href="edit-property.html">Edit Property</a></li>
+            <li><a href="delete-property.html">Delete Property</a></li>
+            <li><a href="search.html">Search</a></li>
+            <li><a href="favorites.html">Favorites</a></li>
+            <li><a href="messages.html">Messages</a></li>
+            <li><a href="notifications.html">Notifications</a></li>
+            <li><a href="settings.html">Settings</a></li>
+            <li><a href="profile.html">Profile</a></li>
+            <li><a href="terms.html">Terms</a></li>
+            <li><a href="help.html">Help</a></li>
+            <li><a href="faq.html">FAQ</a></li>
+            <li><a href="logout.html">Logout</a></li>
+            <li><a href="analytics.html">Analytics</a></li>
+            <li><a href="reviews.html">Reviews</a></li>
+            <li><a href="transactions.html">Transactions</a></li>
+            <li><a href="map.html">Map</a></li>
+            <li><a href="error.html">Error</a></li>
+        </ul>
+    </nav>
+    <main>
+        <section class="hero">
+            <h1>Welcome to Real Estate System</h1>
+            <p>Find your dream property today!</p>
+            <a href="properties.html" style="background: #e74c3c; color: white; padding: 1rem 2rem; text-decoration: none; border-radius: 5px; display: inline-block; margin-top: 1rem;">Browse Properties</a>
+        </section>
+        <section class="features">
+            <div class="feature">
+                <h3>Property Listings</h3>
+                <p>Browse thousands of properties.</p>
+            </div>
+            <div class="feature">
+                <h3>Easy Booking</h3>
+                <p>Book viewings instantly.</p>
+            </div>
+            <div class="feature">
+                <h3>Secure Payments</h3>
+                <p>Track all transactions safely.</p>
+            </div>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2024 Real Estate System. All rights reserved.</p>
+    </footer>
+    <script>
+        // Shared JS functions
+        function highlightNav() {
+            const pages = ['index.html', 'login.html', 'register.html', 'dashboard.html', 'properties.html', 'property-details.html', 'agents.html', 'clients.html', 'bookings.html', 'payments.html', 'reports.html', 'contact.html', 'about.html', 'admin.html', 'add-property.html', 'edit-property.html', 'delete-property.html', 'search.html', 'favorites.html', 'messages.html', 'notifications.html', 'settings.html', 'profile.html', 'terms.html', 'help.html', 'faq.html', 'logout.html', 'analytics.html', 'reviews.html', 'transactions.html', 'map.html', 'error.html'];
+            const current = location.pathname.split('/').pop() || 'index.html';
+            document.querySelectorAll('nav a').forEach(a => {
+                a.classList.toggle('active', a.getAttribute('href') === current);
+            });
+        }
+        highlightNav();
+
+        // Mock data init
+        if (!localStorage.getItem('properties')) {
+            const mockProperties = Array.from({length: 50}, (_, i) => ({
+                id: i+1,
+                title: `Property ${i+1}`,
+                price: (Math.random()*1000 + 100).toFixed(0),
+                img: `https://source.unsplash.com/400x300/?house,${i}`,
+                desc: 'Beautiful property with modern amenities.',
+                location: 'Kigali',
+                agent: 'Agent 1'
+            }));
+            localStorage.setItem('properties', JSON.stringify(mockProperties));
+        }
+    </script>
+</body>
+</html>
+
